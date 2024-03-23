@@ -17,19 +17,19 @@ return new class extends Migration
                   ->constrained('users')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
-                $table->foreignId('categoria_id')
-                    ->constrained('categoria')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
-                $table->foreignId('administrador_id')
-                    ->constrained('administrador')
-                    ->onUpdate('cascade')
+            $table->foreignId('categoria_id')
+                  ->constrained('categoria')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
+            $table->foreignId('administrador_id')
+                  ->constrained('administrador')
+                  ->onUpdate('cascade')
                   ->onDelete('cascade');
             $table->string('ubicacion');
             $table->dateTime('fecha');
             $table->string('evidencia');
             $table->string('descripcion');
-            $table->enum('estado', ['pendiente', 'aprobado', 'desaprobado'])->default('pendiente');
+            $table->enum('estado', ['Pendiente', 'Aprobado', 'Desaprobado', 'En ejecución', 'Solucionado', 'No solucionado'])->default('pendiente');
             $table->timestamps();
         });
     }

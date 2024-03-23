@@ -1,6 +1,6 @@
-@extends('layouts.panel')
+@extends('admin.panel2')
 
-@section('contenido')
+@section('contenidos')
 <!-- Perfil -->
 <section id="breadcrumbs" class="breadcrumbs">
       <div class="container">
@@ -43,8 +43,8 @@
               <h3>Información</h3>
               <ul>
                 @if (Auth::user())
-                <li><strong>Nombres: </strong>{{ Auth::user()->alumno->nombres }}</li>
-                <li><strong>Correo: </strong>{{ Auth::user()->alumno->email}}</li>
+                <li><strong>Nombres: </strong>{{ Auth::user()->administrador->nombres }}</li>
+                <li><strong>Correo: </strong>{{ Auth::user()->administrador->email}}</li>
                 @endif
               </ul>
             </div>
@@ -58,4 +58,4 @@
         </div>
       </div>
     </section><!-- Cuenta Detalles -->
-@endsection
+    @endsection

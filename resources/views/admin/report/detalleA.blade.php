@@ -54,6 +54,7 @@
               </p>
             </div>
             <div class="portfolio-description">
+              @if ($reporte->estado === 'Pendiente')
               <h2>Acciones</h2>
               <form action="{{ route('aprobarR', ['id' =>$reporte->id]) }}" method="POST">
                 @csrf
@@ -64,10 +65,45 @@
                 @csrf
                 <button type="submit">Desaprobar</button>
               </form>
+              @elseif ($reporte->estado === 'Desaprobado')
+              <form id="eliminar" action="{{ route('pendiente.destroy', $reporte->id) }}"  method="POST">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" >Eliminar Reporte</button>
+              </form>
+              @endif
             </div>
           </div>
         </div>
       </div>
     </section><!-- Reporte Detalles -->
+@endsection
 
+@section('scripts')
+<script>
+  (function (){
+        'use strict'
+        var forms = document.querySelectorAll('#eliminar')
+        Array.prototype.slice.call(forms)
+           .forEach(function (form) {
+              form.addEventListener('submit', function(event) {
+                event.preventDefault()
+                event.stopPropagation()
+                Swal.fire({
+                    title: '¿Confirma la eliminacion del reporte?',
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#20c997',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Confirmar'
+                  }).then((result) => {
+                    if(result.isConfirmed) {
+                        Swal.fire('¡Eliminado!', 'El reporte ha sido eliminado exitosamente.','success');
+                        this.submit();
+                    }
+                  })    
+              }, false)
+           })
+    })()
+</script>
 @endsection

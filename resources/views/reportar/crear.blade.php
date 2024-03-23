@@ -11,26 +11,45 @@
         </div>
         <div class="row" data-aos="fade-in">
           <div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch">
-            <form action="{{ route('envio_reporte') }}" method="POST" role="form" class="php-email-form" enctype="multipart/form-data">
+            <form id="enviar" action="{{ route('envio_reporte') }}" method="POST" role="form" class="php-email-form" enctype="multipart/form-data">
             @csrf
               <div class="row">
                 <div class="form-group col-md-6">
                   <label for="categoria">Categoría</label>
-                  <input type="hidden" name="categoria_id" value="{{ $categoriaIdSeleccionada }}">
-                  <input type="text" class="form-control" value="{{ $categoriaSeleccionada }}" readonly>
+                  <select class="form-control" name="categoria_id" id="categoria" required>
+                    <option value="">Seleccionar categoria</option>
+                    @foreach($categorias as $categoria)
+                    <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                    @endforeach
+                <!--   <option>Otra</option>  ---> 
+                  </select>
                 </div>
+                <!--
+                <div class="form-group col-md-6">
+                    <label for="otra_categoria">Otra Categoría</label>
+                    <input type="text" class="form-control" name="otra_categoria" id="otra_categoria">
+                </div>  -->
                 <div class="form-group col-md-6">
                   <label for="name">Ubicación</label>
-                  <input type="text" class="form-control" name="ubicacion" id="ubicacion" required>
+                  <input type="text" class="form-control" name="ubicacion" id="ubicacion" placeholder="Ejemplo: Aula 706" required>
+                  @error('ubicacion')
+                 <small style="color: red;">{{ $message }}</small>
+               @enderror
                 </div>
                 <div class="form-group col-md-6">
                   <label for="name">Fecha</label>
                   <input type="datetime-local" class="form-control" name="fecha" id="fecha" required>
+                  @error('fecha')
+                 <small style="color: red;">{{ $message }}</small>
+               @enderror
                 </div>
                 <div class="form-group col-md-6">
                   <label for="name">Descripción</label>
-                  <input type="text" class="form-control" name="descripcion" id="deescripcion" required>
+                  <input type="text" class="form-control" name="descripcion" id="deescripcion" placeholder="Describir a detalle según la categoria" required>
                 </div>
+                @error('descripcion')
+                 <small style="color: red;">{{ $message }}</small>
+               @enderror
               </div>
             <div class="imagenes">
                 <img id="Seleccionar">
@@ -45,13 +64,16 @@
                 </svg>
                  <p class="txt-center col-md-12">Selecionar imagen</p>
                 </div>
-                <input name="imagen" id="imagen" type="file" class="hidden" />
+                <input name="imagen" id="imagen" type="file" class="hidden" required/>
                </label>
+               @error('imagen')
+                 <small style="color: red;">{{ $message }}</small>
+               @enderror
             </div>
             </div>
             <div class="enviar">
                 <div class="text-center">
-                <button type="submit">Enviar</button>
+                <button id="envio" class="envio" type="submit">Enviar</button>
                 </div>
             </div>
         </form>
@@ -73,3 +95,32 @@
     }) 
 </script>
 @endsection
+@section('scripts')
+<script>
+  (function (){
+        'use strict'
+        var forms = document.querySelectorAll('#enviar')
+        Array.prototype.slice.call(forms)
+           .forEach(function (form) {
+              form.addEventListener('submit', function(event) {
+                event.preventDefault()
+                event.stopPropagation()
+                Swal.fire({
+                    title: '¿Confirma el envio de reporte?',
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#20c997',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Confirmar'
+                  }).then((result) => {
+                    if(result.isConfirmed) {
+                        Swal.fire('¡Enviado!', 'El reporte ha sido enviado exitosamente.','success');
+                        this.submit();
+                    }
+                  })    
+              }, false)
+           })
+    })()
+</script>
+@endsection
+

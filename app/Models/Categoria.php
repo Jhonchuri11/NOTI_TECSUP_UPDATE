@@ -11,7 +11,7 @@ class Categoria extends Model
 
     protected $table = 'categoria';
 
-    protected $fillable = ['nombre'];
+    protected $fillable = ['nombre', 'descripcion', 'administrador_id' ];
 
     public function administrador()
     {   // Se establece relacón belongsTo  indica que una categoria pertenece a un administrador

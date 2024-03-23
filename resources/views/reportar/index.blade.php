@@ -12,43 +12,41 @@
          <div class="col-lg-6 col-md-6 icon-box" data-aos="fade-up">
            <div class="icon"><i class="bi bi-bookmark-check"></i></div>
            <h4 class="title"><a href="">Primer Paso</a></h4>
-           <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+           <p class="description">Seleccionar la categoría según el tipo de incidente.</p>
          </div>
          <div class="col-lg-6 col-md-6 icon-box" data-aos="fade-up" data-aos-delay="100">
            <div class="icon"><i class="bi bi-card-checklist"></i></div>
            <h4 class="title"><a href="">Segundo Paso</a></h4>
-           <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
+           <p class="description">Llenar cada campo según corresponda la categoría.</p>
          </div>
          <div class="col-lg-6 col-md-6 icon-box" data-aos="fade-up" data-aos-delay="200">
            <div class="icon"><i class="bi bi-bar-chart"></i></div>
            <h4 class="title"><a href="">Tercer Paso</a></h4>
-           <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
+           <p class="description">Después del llenado de datos se procederá el envio del reporte.</p>
          </div>
          <div class="col-lg-6 col-md-6 icon-box" data-aos="fade-up" data-aos-delay="300">
            <div class="icon"><i class="bi bi-binoculars"></i></div>
            <h4 class="title"><a href="">Cuarto Paso</a></h4>
-           <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+           <p class="description">Para la verificación del reporte, se tomará en cuenta el estado según sea la categoría.</p>
          </div>
        </div>
      </div>
  </section><!-- Pasos Reportar -->
 
    <!-- ======= Categorias ======= -->
-   <section id="portfolio" class="portfolio section-bg">
+   <section id="portfolio" class="section-bg">
      <div class="container">
 
        <div class="section-title">
-         <h2>Categorías</h2>
+         <h2>+INFO</h2>
          <p>Escoger una de las categorías que este relacionado con el problema que va reportar:</p>
        </div>         
         <div class="row">
-          @foreach ($categorias as $categoria)
-           <div class="categoria col-lg-3 col-md-12 icon-box" data-aos="fade-up">
-                <h4><a class="cat" href="{{ route('reportar.create', ['categoria' => $categoria->nombre, 'categoria_id' => $categoria->id]) }}">
-               {{ $categoria->nombre }}
-            </a></h4>
+           <div class="categoria col-lg-3 col-md-12 icon-box" >
+                <h4><a class="cat" href="{{ route('reportar.create') }}">
+                  Ir a reportar
+               </a></h4>
            </div>
-           @endforeach
         </div>
      </div>
    </section><!-- End Categorias -->

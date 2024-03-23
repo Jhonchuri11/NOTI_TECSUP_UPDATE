@@ -8,6 +8,7 @@ use App\Models\Reporte;
 use App\Models\Categoria;
 use Illuminate\Support\Facades\Auth;
 
+
 class ReportarController extends Controller
 {
     /**
@@ -16,9 +17,8 @@ class ReportarController extends Controller
     public function index()
     {
         //
-        $categorias = Categoria::all();
 
-        return view('reportar.index', compact('categorias'));
+        return view('reportar.index');
     }
 
     /**
@@ -27,10 +27,9 @@ class ReportarController extends Controller
     public function create(Request $request)
     {
         //
-        $categoriaSeleccionada = $request->input('categoria');
-        $categoriaIdSeleccionada = $request->input('categoria_id');
+        $categorias = Categoria::all();
 
-        return view('reportar.crear', compact('categoriaSeleccionada', 'categoriaIdSeleccionada'));
+        return view('reportar.crear', compact('categorias'));
     }
 
     /**
@@ -43,6 +42,20 @@ class ReportarController extends Controller
 
     public function EnviarReporte(Request $request)
     {
+        $rules = [
+            'ubicacion' => 'required',
+            'fecha' => 'required',
+            'descripcion' => 'required',
+            'imagen' => 'required'
+        ];
+        $messages = [
+            'ubicacion.required' => 'La ubicación es requerida',
+            'fecha.required' => 'La fecha es requerida',
+            'descripcion.required' => 'La descripción es importante',
+            'imagen.required' => 'La imagen es reuerida'
+        ];
+        $this->validate($request, $rules, $messages);
+
         $usuario = Auth::user();
         $categoriaId = $request->input('categoria_id');
         $ubicacion = $request->input('ubicacion');
@@ -54,27 +67,26 @@ class ReportarController extends Controller
             $imagen->move($rutaGuardarImg, $imagenReporte);
             $reporte['imagen'] = "$imagenReporte";
         }
-        // Adminsitrador correspondiente a la categoria
 
-       
-        $administrador = Administrador::find($categoriaId);
-        $categoria = $administrador->categoria;
 
-       
+        // Obtener el admin correspondiente a la categoria
+        $administrador = Administrador::whereHas('categoria', function($query) use ($categoriaId) {
+            $query->where('id', $categoriaId);
+        })->first();
 
-        // Crear el reporte
-        $reporte = new Reporte();
-        $reporte->user()->associate($usuario);
-        $reporte->categoria()->associate($categoria);
-        $reporte->administrador()->associate($administrador);
-        $reporte->ubicacion = $ubicacion;
-        $reporte->fecha = $fecha;
-        $reporte->evidencia = $imagenReporte;
-        $reporte->descripcion = $descripcion;
-        
-        $reporte->save();
-
-        return redirect()->route('home');
+        if ($administrador) {
+            // Creamos el reporte
+            $reporte = new Reporte();
+            $reporte->user()->associate($usuario);
+            $reporte->categoria()->associate($administrador);
+            $reporte->administrador()->associate($administrador);
+            $reporte->ubicacion = $ubicacion;
+            $reporte->fecha = $fecha;
+            $reporte->evidencia = $imagenReporte;
+            $reporte->descripcion = $descripcion;
+            $reporte->save();
+        }
+        return redirect()->route('reportes')->with('success', 'success');
     }
 
     /**
@@ -104,8 +116,12 @@ class ReportarController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         //
+        $reporte = Reporte::findorFail($id);
+        $reporte->delete();
+        return redirect()->route('reportes')->with('success', 'success');
+
     }
 }

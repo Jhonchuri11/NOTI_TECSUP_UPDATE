@@ -19,10 +19,6 @@ return new class extends Migration
             $table->string('ape_materno');
             $table->integer('dni');
             $table->string('email');
-            $table->foreignId('categoria_id')
-                  ->constrained('categoria')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
             $table->timestamps();
         });
     }

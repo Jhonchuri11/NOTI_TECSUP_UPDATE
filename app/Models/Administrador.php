@@ -20,8 +20,8 @@ class Administrador extends Model
     }
 
     public function categoria()
-    {   // Esta relación indica que un administrador solo puede pertenecer a una categoria
+    {   // Esta relación indica que un administrador solo le pertenece muchas categorias
         // return $this->hasOne(Categoria::class);
-        return $this->belongsTo(Categoria::class);
+        return $this->hasMany(Categoria::class);
     }
 }

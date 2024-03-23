@@ -39,77 +39,21 @@ class LoginController extends Controller
             ])->onlyInput('codigo_usuario');
         }
 
-        $alumno = Alumno::where('codigo_alumno', $codigo)->first();
-        if ($alumno) {
-            $user = new User();
-            $user->codigo_usuario = $codigo;
-            $user->password = Hash::make($contrasena);
-            $user->tipo = 'Alumno';
+        /// Creamos un nuevo usuario
+        $user = new User();
+        $user->codigo_usuario = $codigo;
+        $user->password = Hash::make($contrasena);
 
-            // Asociar el alumno al users
-            $user->alumno()->associate($alumno);
-            $user->save();
+        $user->save();
 
-            Auth::login($user);
+        Auth::login($user);
 
-            return redirect()->route('home');
-        }
-        
-        // Validando el codigo_profesor
-
-        $profesor = Profesor::where('codigo_profesor', $codigo)->first();
-        if ($profesor) {
-            $user = new User();
-            $user->codigo_usuario = $codigo;
-            $user->password = Hash::make($contrasena);
-            $user->tipo = 'Profesor';
-
-            // Asociando el profesor con users
-            $user->profesor()->associate($profesor);
-            $user->save();
-
-            Auth::login($user);
-
-            return redirect()->route('home');
-        }
-
-        // Validando el codigo_personal
-
-        $personal = Personal::where('codigo_personal', $codigo)->first();
-        if ($personal) {
-            $user = new User();
-            $user->codigo_usuario = $codigo;
-            $user->password = Hash::make($contrasena);
-            $user->tipo = 'Personal';
-
-            // Asociando el personal con users
-            $user->personal()->associate($personal);
-            $user->save();
-
-            Auth::login($user);
-
-            return redirect()->route('home');
-        }
-
-        $administrador = Administrador::where('codigo_administrador', $codigo)->first();
-        if ($administrador) {
-            $user = new User();
-            $user->codigo_usuario = $codigo;
-            $user->password = Hash::make($contrasena);
-            $user->tipo = 'Administrador';
-            
-            // Asociando el administrador con users
-            $user->administrador()->associate($administrador);
-            $user->save();
-
-            Auth::login($user);
-
-            return redirect()->route('panel2');
-        }
+        return redirect()->route('home');
         
         return back()->withErrors([
             'codigo_usuario' => 'El codigo utilizado no se encuentra'
         ])->onlyInput('codigo_usuario');
+        
     }
     public function login(Request $request)
     {
@@ -134,8 +78,6 @@ class LoginController extends Controller
             if ($user->tipo === 'Alumno') {
                 return redirect()->route('home')->with('success', 'success');
             } elseif ($user->tipo === 'Profesor') {
-                return redirect()->route('home')->with('success', 'success');
-            } elseif ($user->tipo === 'Personal') {
                 return redirect()->route('home')->with('success', 'success');
             } elseif ($user->tipo === 'Administrador') {
                 return redirect()->route('panel2')->with('success', 'success');

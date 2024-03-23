@@ -16,8 +16,8 @@
             <div class="portfolio-wrap">
               <img src="/imagen/{{ $reporte->evidencia }}" class="img-fluid" alt="">
               <div class="portfolio-links">
-                <a href="/imagen/{{ $reporte->evidencia }}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Pérdida de objeto"><i>Ver</i></a>
-                <a href="{{ route('detalle', ['id' => $reporte->id]) }}" title="More Details"><i>Detalle</i></a>
+                <a href="/imagen/{{ $reporte->evidencia }}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Pérdida de objeto"><i class="bi bi-eye"></i>
+                <a href="{{ route('detalle', ['id' => $reporte->id]) }}" title="More Details"><i class="bi bi-file-earmark-text"></i></a>
               </div>
             </div>
           </div>

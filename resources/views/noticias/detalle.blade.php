@@ -45,6 +45,7 @@
                 <li><strong>Categoria: </strong>{{ $reporte->categoria->nombre }} </li>
                 <li><strong>Lugar: </strong>{{ $reporte->ubicacion }}</li>
                 <li><strong>Fecha: </strong>{{ $reporte->fecha }} </li>
+                <li><strong>Contactar | Administrador: </strong><i class="bi bi-telephone-fill"></i>913740129</li>
               </ul>
             </div>
             <div class="portfolio-description">

@@ -12,11 +12,11 @@
 
       <nav id="navbar" class="nav-menu navbar">
         <ul>
-          <li><a href="{{ route('nosotros') }}" class="nav-link scrollto"><i></i> <span>Nosotros</span></a></li>
-          <li><a href="{{ route('reportar.index') }}" class="nav-link scrollto"><i></i> <span>Reportar</span></a></li>
-          <li><a href="{{ route('adminR.index') }}" class="nav-link scrollto"><i></i> <span>Reportes</span></a></li>
-          <li><a href="{{ route('noticias.index') }}" class="nav-link scrollto"><i></i> <span>Noticias</span></a></li>
-          <li><a href="{{ route('cuenta.index') }}" class="nav-link scrollto"><i></i> <span>Mi cuenta</span></a></li>
+          <li><a href="{{ route('categorias') }}" class="nav-link scrollto"><i></i> <span>Categorias</span></a></li>
+          <li><a href="{{ route('aprobados') }}" class="nav-link scrollto"><i></i> <span>Reportes aprobados</span></a></li>
+          <li><a href="{{ route('pendiente.index') }}" class="nav-link scrollto"><i></i> <span>Reportes pendientes</span></a></li>
+          <li><a href="{{ route('desaprobados') }}" class="nav-link scrollto"><i></i> <span>Reportes desaprobados</span></a></li>
+          <li><a href="{{ route('cuentaA') }}" class="nav-link scrollto"><i></i> <span>Mi cuenta</span></a></li>
         </ul>
       </nav><!-- .nav-menu -->
     </div>
