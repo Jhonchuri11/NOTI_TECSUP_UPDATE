@@ -1,7 +1,6 @@
 #!/bin/bash
 
 composer install
-npm install
 npm run production
 php artisan optimize
 php artisan config:cache
